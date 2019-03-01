@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import './App.css';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class Home extends Component {
 
@@ -15,40 +15,29 @@ class Home extends Component {
       d`)
       .then(res => {
         const berriak = res.data;
-        console.log(res.data);
         this.setState({ berriak });
       })
   }
 
   render() {
-
     return (
-
-     <div>
-      <ul className="berri_zerrenda">
-        {
-          this.state.berriak.map(berri =>
-            <li key={berri.id}>
-
-{berri.better_featured_image
-  ? <img src={berri.better_featured_image.source_url} />
-  : 'no pic'  
-  }
-          {berri.modified.split('T')[0]}
-
-
-              
-              <br />
-
-              {berri.title.rendered}
-              <br />
-
-             <Link to={'/' + berri.slug}>click here mother fucker</Link>
-
-            </li>)
-        }
-      </ul>
-      </div>
+      <React.Fragment>
+        <ul className="berri_zerrenda">
+          {
+            this.state.berriak.map(berri =>
+          
+              <li key={berri.id}>
+                {berri.better_featured_image
+                  ? <img src={berri.better_featured_image.source_url} alt={berri.title.rendered} />
+                  : <img src='https://via.placeholder.com/4455x2970.png?text=Noticia sin imagen' alt='no image' />
+                }
+                <span className='date'>{berri.modified.split('T')[0]}</span>
+                <h1 className='title'>{berri.title.rendered}</h1>
+                <Link to={'/' + berri.slug}><span>ver mas</span></Link>
+              </li>)
+          }
+        </ul>
+      </React.Fragment>
     )
   }
 }
